@@ -1,0 +1,1 @@
+int getop(char s[]);

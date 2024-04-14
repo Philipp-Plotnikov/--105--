@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h> /* для atof() */
 #include <ctype.h>
+#include <math.h>
 
 #define MAXOP 3 /* макс. размер операнда или оператора */
 #define NUMBER '0' /* признак числа */
@@ -36,11 +37,26 @@ int getop(char s[])
         exit (1);
     } 
     int i, c;
+    int isMinus = 0;
     while ((s[0] = c = getchar()) == ' ' || c == '\t');
+    if (c == '-') {
+        isMinus = 1;
+        c = getchar();
+    }
     s[1] = '\0';
+    // if (isMinus == 1) {
+    //     s[1] = '-';
+    // } 
+    // s[0] = '-';
     if (!isdigit(c) && c != '.')
+        if (isMinus == 1) {
+            return '-';
+        } 
         return c; /* не число */
     i = 0;
+    // if (isMinus == 1) {
+    //     s[++i] = c;
+    // }
     if (isdigit(c)) /* накапливаем целую часть */
         while (isdigit(s[++i] = c = getchar())) {
             if (MAXOP < i + 1) {
@@ -86,6 +102,10 @@ int main ()
                     push (pop() / op2);
                 else
                     printf("ошибка: деление на нуль\n");
+                break;
+            case '%':
+                op2 = pop();
+                push(fmod(pop(), op2));
                 break;
             case '\n' :
                 printf("\t%.8g\n", pop());
