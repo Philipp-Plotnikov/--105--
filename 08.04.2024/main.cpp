@@ -70,9 +70,10 @@ int main() {
     double maxDistance = 0;
     int listSize = list.GetSize();
     Node* node1 = list.GetHead();
-    Node* node2 = node1->next;
+    Node* node2;
     Node* maxNode1, *maxNode2;
     for (int i = 0; i < listSize - 1; i++) {
+        node2 = node1->next;
         for (int j = i + 1; j < listSize; j++) {
             double distance = node1->vector->GetDistance(node2->vector);
             if (distance > maxDistance) {
@@ -83,7 +84,6 @@ int main() {
             node2 = node2->next;
         }
         node1 = node1->next;
-        node2 = node1->next;
     }
     cout << "Max distance: " << maxDistance << endl;
     cout << "First vector: ";

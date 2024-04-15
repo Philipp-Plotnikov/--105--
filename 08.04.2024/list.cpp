@@ -23,6 +23,11 @@ void MyList::pop_front() {
         std::cout << "pop_front error" << std::endl;
         exit(1);
     }
+    if (s == 1) {
+        delete head;
+        head = tail = nullptr;
+        return;
+    }
     Node* pTemp = head;
     head = head->next;
     delete pTemp;
