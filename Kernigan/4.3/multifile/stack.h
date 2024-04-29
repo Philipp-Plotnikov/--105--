@@ -5,6 +5,6 @@
 #define MAXVAL 100 /* максимальная глубина стека */
 #define BUFSIZE 100
 
-void push(double);
+void push_stack(double);
 
-double pop(void);
+double pop_stack(void);

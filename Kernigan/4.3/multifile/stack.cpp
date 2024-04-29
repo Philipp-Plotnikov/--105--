@@ -5,7 +5,7 @@
 int sp = 0; /* следующая свободная позиция в стеке */
 double val[MAXVAL]; /* стек */
 
-void push(double f)
+void push_stack(double f)
 {
     if (sp < MAXVAL)
         val[sp++] = f;
@@ -13,7 +13,7 @@ void push(double f)
         printf("ошибка: стек полон, %g не помещается\n", f);
 }
 
-double pop(void)
+double pop_stack(void)
 {
     if (sp > 0)
         return val[--sp];
