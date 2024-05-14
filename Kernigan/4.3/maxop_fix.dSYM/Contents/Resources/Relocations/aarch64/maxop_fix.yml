@@ -1,0 +1,14 @@
+---
+triple:          'arm64-apple-darwin'
+binary-path:     "/Users/philippplotnikov/WorkingSpace/University/ЯТП/Practise/Kernigan/4.3/maxop_fix"
+relocations:
+  - { offsetInCU: 0x26, offset: 0x26, size: 0x8, addend: 0x0, symName: __Z4pushd, symObjAddr: 0x0, symBinAddr: 0x1000039D4, symSize: 0x78 }
+  - { offsetInCU: 0x3F, offset: 0x3F, size: 0x8, addend: 0x0, symName: _sp, symObjAddr: 0x1E58, symBinAddr: 0x100008000, symSize: 0x0 }
+  - { offsetInCU: 0x5B, offset: 0x5B, size: 0x8, addend: 0x0, symName: _val, symObjAddr: 0x1E60, symBinAddr: 0x100008008, symSize: 0x0 }
+  - { offsetInCU: 0x319, offset: 0x319, size: 0x8, addend: 0x0, symName: __Z4pushd, symObjAddr: 0x0, symBinAddr: 0x1000039D4, symSize: 0x78 }
+  - { offsetInCU: 0x341, offset: 0x341, size: 0x8, addend: 0x0, symName: __Z3popv, symObjAddr: 0x78, symBinAddr: 0x100003A4C, symSize: 0x70 }
+  - { offsetInCU: 0x35E, offset: 0x35E, size: 0x8, addend: 0x0, symName: __Z5getopPc, symObjAddr: 0xE8, symBinAddr: 0x100003ABC, symSize: 0x104 }
+  - { offsetInCU: 0x3B4, offset: 0x3B4, size: 0x8, addend: 0x0, symName: __Z7isdigiti, symObjAddr: 0x1EC, symBinAddr: 0x100003BC0, symSize: 0x28 }
+  - { offsetInCU: 0x3E0, offset: 0x3E0, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x214, symBinAddr: 0x100003BE8, symSize: 0x17C }
+  - { offsetInCU: 0x424, offset: 0x424, size: 0x8, addend: 0x0, symName: __Z9__isctypeim, symObjAddr: 0x42C, symBinAddr: 0x100003E00, symSize: 0x80 }
+...

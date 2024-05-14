@@ -1,8 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h> /* для atof() */
 #include <ctype.h>
+#include <math.h>
 
-#define MAXOP 100 /* макс. размер операнда или оператора */
+#define MAXOP 3 /* макс. размер операнда или оператора */
 #define NUMBER '0' /* признак числа */
 #define MAXVAL 100 /* максимальная глубина стека */
 #define BUFSIZE 100
@@ -10,7 +11,7 @@
 int sp = 0; /* следующая свободная позиция в стеке */
 double val[MAXVAL]; /* стек */
 
-void push(double f)
+void push_stack(double f)
 {
     if (sp < MAXVAL)
         val[sp++] = f;
@@ -18,7 +19,7 @@ void push(double f)
         printf("ошибка: стек полон, %g не помещается\n", f);
 }
 
-double pop(void)
+double pop_stack(void)
 {
     if (sp > 0)
         return val[--sp];
@@ -28,37 +29,49 @@ double pop(void)
     }
 }
 
-char buf[BUFSIZE]; /* буфер для ungetch */
-int bufp = 0; /* след, свободная позиция в буфере */
-
-int getch(void) /* взять (возможно возвращенный) символ */ {
-    return (bufp > 0) ? buf[--bufp] : getchar();
-}
-
-void ungetch(int c) /* вернуть символ на ввод */
-{
-    if (bufp >= BUFSIZE)
-        printf ("ungetch: слишком много символов\n");
-    else
-        buf[bufp++] = c;
-}
-
 /* getop: получает следующий оператор или операнд */
 int getop(char s[])
-{
+{   
+    if (MAXOP < 1) {
+        printf( "Error: reach the MAXOP\n");
+        exit (1);
+    } 
     int i, c;
-    while ((s[0] = c = getch()) == ' ' || c == '\t' );
+    int isMinus = 0;
+    while ((s[0] = c = getchar()) == ' ' || c == '\t');
+    if (c == '-') {
+        isMinus = 1;
+        c = getchar();
+    }
     s[1] = '\0';
+    // if (isMinus == 1) {
+    //     s[1] = '-';
+    // } 
+    // s[0] = '-';
     if (!isdigit(c) && c != '.')
+        if (isMinus == 1) {
+            return '-';
+        } 
         return c; /* не число */
     i = 0;
+    // if (isMinus == 1) {
+    //     s[++i] = c;
+    // }
     if (isdigit(c)) /* накапливаем целую часть */
-        while (isdigit(s[++i] = c = getch()));
+        while (isdigit(s[++i] = c = getchar())) {
+            if (MAXOP < i + 1) {
+                printf( "Error: reach the MAXOP\n");
+                exit (1);
+            } 
+        }
     if (c == '.') /* накапливаем дробную часть */
-        while (isdigit(s[++i] = c = getch()));
+        while (isdigit(s[++i] = c = getchar())) {
+            if (MAXOP < i + 1) {
+                printf( "Error: reach the MAXOP\n");
+                exit (1);
+            } 
+        }
     s[i] = '\0';
-    if (c != EOF)
-        ungetch(c);
     return NUMBER;
 }
 
@@ -71,27 +84,31 @@ int main ()
     while ((type = getop(s)) != EOF) {
         switch (type) {
             case NUMBER:
-                push (atof(s));
+                push_stack (atof(s));
                 break;
             case '+':
-                push (pop() + pop());
+                push_stack (pop_stack() + pop_stack());
                 break;
             case '*':
-                push (pop() * pop());
+                push_stack (pop_stack() * pop_stack());
                 break;
             case '-':
-                op2 = pop();
-                push (pop() - op2);
+                op2 = pop_stack();
+                push_stack (pop_stack() - op2);
                 break;
             case '/':
-                op2 = pop();
+                op2 = pop_stack();
                 if (op2 != 0.0)
-                    push (pop() / op2);
+                    push_stack (pop_stack() / op2);
                 else
                     printf("ошибка: деление на нуль\n");
                 break;
+            case '%':
+                op2 = pop_stack();
+                push_stack(fmod(pop_stack(), op2));
+                break;
             case '\n' :
-                printf("\t%.8g\n", pop());
+                printf("\t%.8g\n", pop_stack());
                 break;
             default:
                 printf("ошибка: неизвестная операция %s\n", s);
